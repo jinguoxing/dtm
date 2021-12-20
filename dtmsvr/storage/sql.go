@@ -25,7 +25,7 @@ func (s *SqlStore) Ping() error {
 }
 
 func (s *SqlStore) PopulateData(skipDrop bool) {
-	file := fmt.Sprintf("%s/storage.%s.sql", common.GetCallerCodeDir(), config.Store.Driver)
+	file := fmt.Sprintf("./sqls/dtmsvr.storage.%s.sql", config.Store.Driver)
 	common.RunSQLScript(config.Store.GetDBConf(), file, skipDrop)
 }
 
