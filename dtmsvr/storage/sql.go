@@ -16,8 +16,12 @@ type SqlStore struct {
 }
 
 func (s *SqlStore) Ping() error {
-	dbr := dbGet().Exec("select 1")
-	return dbr.Error
+	sdb, err := dtmimp.StandaloneDB(Config.DB)
+	dtmimp.FatalIfError(err)
+	defer func() {
+		sdb.Close()
+	}()
+	return dtmimp.DBExec(sdb, "select 1")
 }
 
 func (s *SqlStore) PopulateData(skipDrop bool) {
